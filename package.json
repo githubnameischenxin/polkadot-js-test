@@ -1,0 +1,14 @@
+{
+  "name": "course",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@polkadot/api": "10.11.1",
+    "@polkadot/types": "10.11.1",
+    "web3": "^1.5.1"
+  },
+  "scripts": {
+    "start": "ts-node main.ts"
+  }
+}
