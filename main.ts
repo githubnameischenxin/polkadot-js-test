@@ -10,12 +10,17 @@ const connect = async () => {
     return api;
 }
 
-const subscribe = async (api: ApiPromise) => {
+const subscribeStorageValue = async (api: ApiPromise) => {
+    await api.query.templateModule.something((value: { toHuman: () => any; }) => {
+        console.log("something is ", value.toHuman());
+    });
+}
+
+const subscribeSomethingStoredEvent = async (api: ApiPromise) => {
     await api.query.system.events(events => {
         events.forEach(record => {
             const event = record.event;
             if(event.method === "SomethingStored") {
-                console.log("something is ", event.data[0].toHuman());
                 console.log("SomethingStored : ", record.toHuman());
             }
         });
@@ -25,8 +30,9 @@ const subscribe = async (api: ApiPromise) => {
 const main = async () => {
     const api = await connect();
 
+    await subscribeStorageValue(api);
     
-    await subscribe(api);
+    await subscribeSomethingStoredEvent(api);
     
     await sleep(50000);
 
