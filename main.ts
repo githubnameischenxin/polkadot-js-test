@@ -27,12 +27,26 @@ const subscribeSomethingStoredEvent = async (api: ApiPromise) => {
     });
 }
 
+const offchainStorageGet = async (api: ApiPromise) => {
+    const key = "node-template::storage";
+    
+    let data = await api.rpc.offchain.localStorageGet("PERSISTENT", key);
+    if(data.isSome) {
+        console.log(data.toHuman());
+    }else{
+        console.log("key: node-template::storage 未找到值");
+    }
+    
+}
+
 const main = async () => {
     const api = await connect();
 
     await subscribeStorageValue(api);
     
     await subscribeSomethingStoredEvent(api);
+
+    await offchainStorageGet(api);
     
     await sleep(50000);
 
